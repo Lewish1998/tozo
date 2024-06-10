@@ -1,0 +1,73 @@
+[project]
+name = "backend"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "Lewish1998", email = "108507629+Lewish1998@users.noreply.github.com"},
+]
+dependencies = [
+    "quart>=0.19.6",
+    "quart-auth>=0.10.1",
+    "bcrypt>=4.1.3",
+    "zxcvbn>=4.4.28",
+    "itsdangerous>=2.2.0",
+    "quart-rate-limiter>=0.10.0",
+    "pydantic[email]>=2.7.3",
+    "quart-schema>=0.20.0",
+    "quart-db>=0.8.2",
+    "httpx>=0.27.0",
+]
+requires-python = "==3.12.*"
+readme = "README.md"
+license = {text = "MIT"}
+
+
+[tool.pdm]
+distribution = false
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "black>=24.4.2",
+    "isort>=5.13.2",
+    "djhtml>=3.0.6",
+    "mypy>=1.10.0",
+    "flake8>=7.0.0",
+    "bandit>=1.7.8",
+    "vulture>=2.11",
+    "pytest>=8.2.1",
+    "pytest-asyncio>=0.23.7",
+    "freezegun>=1.5.1",
+]
+
+[tool.black]
+target-version = ["py312"]
+
+
+[tool.isort]
+profile = "black"
+
+[tool.vulture]
+min_confidence = 100
+
+[tool.pytest.ini_options]
+addopts = "--showlocals"
+asyncio_mode = "auto"
+pythonpath = ["src"]
+
+[tool.pdm.scripts]
+format-black = "black src/ tests/"
+format-djhtml = "djhtml src/backend/templates -t 2"
+format-isort = "isort src tests"
+format = {composite = ["format-black", "format-djhtml", "format-isort"]}
+lint-bandit = "bandit -r src/"
+lint-black = "black --check --diff src/ tests/"
+lint-djhtml = "djhtml src/backend/templates -t 2 --check"
+lint-flake8 = "flake8 src/ tests/"
+lint-isort = "isort --check --diff src tests"
+lint-mypy = "mypy src/backend tests"
+lint-vulture = "vulture src"
+lint = {composite = ["lint-bandit", "lint-black", "lint-djhtml", "lint-flake8", "lint-isort", "lint-mypy", "lint-vulture"]}
+start = {cmd = "quart --app src/backend/run.py run --port 5050", env_file = "development.env"}
+recreate-db-base = "quart --app src/backend/run.py recreate_db"
+recreate-db = {composite = ["recreate-db-base"], env_file = "development.env"}
+test = {composite = ["recreate-db-base", "pytest tests/"], env_file = "testing.env"}
