@@ -10,6 +10,8 @@ from subprocess import call # nosec
 from urllib.parse import urlparse
 import logging
 from backend.blueprints.sessions import blueprint as sessions_blueprint
+from backend.blueprints.members import blueprint as members_blueprint
+from backend.blueprints.todos import blueprint as todos_blueprint
 
 
 app = Quart(__name__)
@@ -21,6 +23,8 @@ quart_db = QuartDB(app)
 
 app.register_blueprint(control_blueprint)
 app.register_blueprint(sessions_blueprint)
+app.register_blueprint(members_blueprint)
+app.register_blueprint(todos_blueprint)
 
 # Error handling
 @app.errorhandler(APIError) # type: ignore
