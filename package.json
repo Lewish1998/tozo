@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "zxcvbn": "^4.4.2"
+  },
+  "devDependencies": {
+    "@types/zxcvbn": "^4.4.4"
+  }
+}
