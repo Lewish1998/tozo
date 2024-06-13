@@ -6,6 +6,8 @@ import { FieldHookConfig, useField } from "formik";
 
 import { combineHelperText } from "src/utils";
 
+
+
 const DateField = (props: FieldHookConfig<Date | null> & TextFieldProps) => {
   const [field, meta, helpers] = useField<Date | null>(props);
 
@@ -15,7 +17,7 @@ const DateField = (props: FieldHookConfig<Date | null> & TextFieldProps) => {
         label={props.label}
         value={field.value}
         onChange={(newValue) => helpers.setValue(newValue)}
-        renderInput={(params) => (
+        renderInput={(params: TextFieldProps) => (
           <TextField
             fullWidth={props.fullWidth}
             {...params}

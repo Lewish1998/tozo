@@ -12,21 +12,31 @@ import Container from '@mui/material/Container';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { AuthContextProvider } from './AuthContext';
 import Router from "src/Router";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ToastContextProvider } from 'src/ToastContext';
+import Toasts from 'src/components/Toasts';
+
+const queryClient = new QueryClient();
 
 const App = () => {
   return (
-    <AuthContextProvider>
-      <HelmetProvider>
-        <Helmet>
-          <title>Tozo</title>
-        </Helmet>
-        <ThemeProvider>
-          <Container maxWidth="md">
-            <Router />
-          </Container>
-        </ThemeProvider>
-      </HelmetProvider>
-    </AuthContextProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthContextProvider>
+        <HelmetProvider>
+          <Helmet>
+            <title>Tozo</title>
+          </Helmet>
+          <ThemeProvider>
+            <ToastContextProvider>
+              <Container maxWidth="md">
+                <Toasts />
+                <Router />
+              </Container>
+            </ToastContextProvider>
+          </ThemeProvider>
+        </HelmetProvider>
+      </AuthContextProvider>
+    </QueryClientProvider>
   )
 }
 
