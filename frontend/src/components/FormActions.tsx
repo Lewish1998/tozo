@@ -16,7 +16,7 @@ interface IProps {
     links?: ILink[];
 }
 
-const FormActions = ({ disabled, isSubmitting, label, links }: IProps) => {
+const FormActions = ({ disabled, isSubmitting, label, links }: IProps) => (
     <Stack direction="row" spacing={1} sx={{ marginTop: 2 }}>
         <LoadingButton
             disabled={disabled}
@@ -38,6 +38,6 @@ const FormActions = ({ disabled, isSubmitting, label, links }: IProps) => {
             </Button>
         ))}
     </Stack>
-};
+);
 
 export default FormActions;

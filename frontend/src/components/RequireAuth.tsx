@@ -17,3 +17,5 @@ const RequireAuth = ({ children }: IProps) => {
         return <Navigate state={{ from: location }} to="/login/"/>;
     }
 };
+
+export default RequireAuth;
